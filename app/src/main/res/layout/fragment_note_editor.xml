@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="note"
+            type="com.glunode.notesapp.model.Note" />
+
+        <variable
+            name="viewModel"
+            type="com.glunode.notesapp.ui.noteeditor.NoteEditorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/size_medium">
+
+        <ImageView
+            android:id="@+id/navigateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_medium"
+            android:background="@drawable/basic_view_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/size_small"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/popupBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_medium"
+            android:layout_marginEnd="@dimen/size_smaller"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/size_small"
+            android:src="@drawable/ic_more_vert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/timestampText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_medium"
+            setFormattedDateText="@{note}"
+            android:layout_marginTop="@dimen/size_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/navigateBtn"
+            tools:text="Modified Aug 15, 2020 10:48:23" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/noteTitleET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_medium"
+            android:layout_marginTop="@dimen/size_medium"
+            android:layout_marginEnd="@dimen/size_medium"
+            android:background="@drawable/note_editor"
+            android:fontFamily="serif"
+            android:hint="Title"
+            android:imeOptions="actionNext"
+            android:paddingStart="@dimen/size_medium"
+            android:paddingTop="@dimen/size_small"
+            android:paddingEnd="@dimen/size_medium"
+            android:paddingBottom="@dimen/size_small"
+            android:singleLine="true"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@id/noteDescTextScroller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/timestampText"
+            app:layout_constraintVertical_bias="0" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:id="@+id/noteDescTextScroller"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/size_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/note_editor"
+            app:layout_constraintTop_toBottomOf="@id/noteTitleET">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/noteDescET"
+                android:layout_width="match_parent"
+                android:background="@null"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:gravity="top|start"
+                android:hint="Enter note here"
+                android:inputType="textMultiLine"
+                android:lines="12"
+                android:padding="@dimen/size_medium" />
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editNoteFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/colorAccent"
+            android:layout_margin="@dimen/size_medium"
+            android:onClick="@{() -> viewModel.saveNote(note)}"
+            android:src="@drawable/ic_save"
+            android:transitionName="fab"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

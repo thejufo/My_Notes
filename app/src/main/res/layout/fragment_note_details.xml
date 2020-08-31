@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.glunode.notesapp.ui.notedetails.NoteDetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/size_medium">
+
+        <ImageView
+            android:id="@+id/navigateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_medium"
+            android:background="@drawable/basic_view_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/size_small"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_medium"
+            android:background="@drawable/basic_view_bg"
+            android:padding="@dimen/size_small"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@id/navigateBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/navigateBtn"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/noteTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_medium"
+            android:layout_marginTop="@dimen/size_large"
+            android:layout_marginEnd="@dimen/size_medium"
+            android:fontFamily="serif"
+            android:singleLine="true"
+            android:text="@{viewModel.note.title}"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/navigateBtn"
+            app:layout_constraintVertical_bias="0"
+            tools:text="My First Note!" />
+
+        <TextView
+            android:id="@+id/timestampText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_medium"
+            setFormattedDateText="@{viewModel.note}"
+            android:layout_marginTop="@dimen/size_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/noteTitleText"
+            tools:text="Edited 10:48" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/size_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/timestampText">
+
+            <TextView
+                android:id="@+id/noteDescET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_large"
+                android:fontFamily="serif"
+                android:gravity="top|start"
+                android:text="@{viewModel.note.desc}"
+                tools:text="This is content!This is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is content" />
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteNoteFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_medium"
+            android:src="@drawable/ic_edit"
+            app:fabSize="mini"
+            android:onClick="@{() -> viewModel.deleteNote(viewModel.note)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/editNoteFab"
+            app:layout_constraintEnd_toEndOf="@id/editNoteFab"
+            app:layout_constraintStart_toStartOf="@id/editNoteFab" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editNoteFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.navigateToEditor(viewModel.note)}"
+            android:layout_margin="@dimen/size_medium"
+            android:src="@drawable/ic_edit"
+            android:transitionName="fab"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

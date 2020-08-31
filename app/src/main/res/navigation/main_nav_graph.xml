@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/notesList">
+
+    <fragment
+        android:id="@+id/notesList"
+        android:name="com.glunode.notesapp.ui.noteslist.NotesListFragment"
+        android:label=""
+        tools:layout="@layout/fragment_notes_list">
+
+        <action
+            android:id="@+id/notesList_to_noteEditor"
+            app:destination="@id/noteEditor"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/notesList_to_noteDetails"
+            app:destination="@id/noteDetails"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteEditor"
+        android:name="com.glunode.notesapp.ui.noteeditor.NoteEditorFragment"
+        android:label=""
+        tools:layout="@layout/fragment_note_editor">
+
+        <argument
+            android:name="note"
+            app:argType="com.glunode.notesapp.model.Note"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteDetails"
+        android:name="com.glunode.notesapp.ui.notedetails.NoteDetailsFragment"
+        android:label=""
+        tools:layout="@layout/fragment_note_details">
+
+        <action
+            android:id="@+id/noteDetails_to_noteEditor"
+            app:destination="@id/noteEditor"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <argument
+            android:name="noteId"
+            app:argType="string" />
+    </fragment>
+</navigation>
