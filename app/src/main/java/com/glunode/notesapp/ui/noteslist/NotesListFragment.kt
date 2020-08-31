@@ -17,6 +17,7 @@ import com.glunode.notesapp.model.Note
 import com.glunode.notesapp.utils.ItemSpacingDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_notes_list.*
+import timber.log.Timber
 
 @AndroidEntryPoint
 class NotesListFragment : Fragment(), NotesAdapter.OnNoteClickListener {
@@ -49,11 +50,13 @@ class NotesListFragment : Fragment(), NotesAdapter.OnNoteClickListener {
                 return true
             }
         })
+
+        initObservers()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    private fun initObservers() {
         viewModel.notesList.observe(viewLifecycleOwner, Observer {
+            Timber.e("Observing notes ${it.size}")
             notesAdapter.notes = it.toMutableList()
         })
 

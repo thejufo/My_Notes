@@ -19,6 +19,7 @@ class NotesAdapter(private val onNoteClickListener: OnNoteClickListener) :
     var notes = mutableListOf<Note>()
         set(value) {
             field = value
+            filteredNotes = value
             notifyDataSetChanged()
         }
 
@@ -40,9 +41,7 @@ class NotesAdapter(private val onNoteClickListener: OnNoteClickListener) :
                 filteredNotes = if (charString.isEmpty()) notes
                 else {
                     notes.filter {
-                        it.title.contains(charString, true) || it.desc.contains(
-                            charString
-                        )
+                        it.title.contains(charString, true) || it.desc.contains(charString, true)
                     }
                 }
                 val results = FilterResults()

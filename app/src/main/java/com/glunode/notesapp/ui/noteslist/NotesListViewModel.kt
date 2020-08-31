@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.glunode.notesapp.data.NotesRepository
-import timber.log.Timber
 
 class NotesListViewModel @ViewModelInject constructor(notesRepository: NotesRepository) :
     ViewModel() {
@@ -24,7 +23,6 @@ class NotesListViewModel @ViewModelInject constructor(notesRepository: NotesRepo
         get() = _navigateToEditor
 
     fun navigateToEditor() {
-        Timber.e("Should navigate")
         _navigateToEditor.value = true
     }
 
