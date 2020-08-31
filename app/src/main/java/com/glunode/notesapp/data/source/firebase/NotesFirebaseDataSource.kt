@@ -2,7 +2,6 @@
 
 package com.glunode.notesapp.data.source.firebase
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.glunode.notesapp.data.source.NotesDataSource
@@ -12,7 +11,6 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 class NotesFirebaseDataSource @Inject constructor(firebaseDatabase: FirebaseFirestore) :
@@ -22,9 +20,7 @@ class NotesFirebaseDataSource @Inject constructor(firebaseDatabase: FirebaseFire
 
     override suspend fun addNote(note: Note) =
         try {
-            val id = UUID.randomUUID().toString()
-            note.id = id
-            notesCol.document(id).set(note).await()
+            notesCol.document(note.id).set(note).await()
             true
         } catch (e: Exception) {
             e.printStackTrace()

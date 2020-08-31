@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/noteTitleText"
-                isGone="@{note.title == null || note.title.empty}"
+                isVisible="@{note.title != null || !note.title.empty}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/size_smaller"

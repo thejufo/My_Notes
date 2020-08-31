@@ -5,11 +5,16 @@ package com.glunode.notesapp.ui.noteslist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.glunode.notesapp.databinding.ItemNoteBinding
 import com.glunode.notesapp.model.Note
 
-class NotesAdapter(private val onNoteClickListener: OnNoteClickListener) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter(private val onNoteClickListener: OnNoteClickListener) :
+    RecyclerView.Adapter<NotesAdapter.ViewHolder>(), Filterable {
+
+    private var filteredNotes: List<Note>? = null
 
     var notes = mutableListOf<Note>()
         set(value) {
@@ -17,14 +22,44 @@ class NotesAdapter(private val onNoteClickListener: OnNoteClickListener) : Recyc
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, onNoteClickListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder.from(parent, onNoteClickListener)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = notes[position]
-        holder.bind(note)
+        filteredNotes?.get(position)?.let { note ->
+            holder.bind(note)
+        }
     }
 
-    override fun getItemCount() = notes.count()
+    override fun getItemCount() = filteredNotes?.count() ?: 0
+
+    override fun getFilter(): Filter? {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val charString = charSequence.toString()
+                filteredNotes = if (charString.isEmpty()) notes
+                else {
+                    notes.filter {
+                        it.title.contains(charString, true) || it.desc.contains(
+                            charString
+                        )
+                    }
+                }
+                val results = FilterResults()
+                results.values = filteredNotes
+                return results
+            }
+
+            override fun publishResults(
+                charSequence: CharSequence,
+                filterResults: FilterResults
+            ) {
+                filteredNotes = filterResults.values as ArrayList<Note>
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 
     class ViewHolder(
         private val binding: ItemNoteBinding,

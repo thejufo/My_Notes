@@ -29,17 +29,37 @@
             android:padding="@dimen/size_small"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/size_medium"
             android:background="@drawable/basic_view_bg"
+            android:id="@+id/deleteNoteBtn"
+            android:clickable="true"
             android:padding="@dimen/size_small"
-            android:src="@drawable/ic_edit"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.deleteNote(viewModel.note)}"
+            android:src="@drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="@id/navigateBtn"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/navigateBtn"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_medium"
+            android:background="@drawable/basic_view_bg"
+            android:clickable="true"
+            android:src="@drawable/ic_edit"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.navigateToEditor(viewModel.note)}"
+            android:padding="@dimen/size_small"
+            app:layout_constraintBottom_toBottomOf="@id/navigateBtn"
+            app:layout_constraintEnd_toStartOf="@id/deleteNoteBtn"
             app:layout_constraintTop_toTopOf="@id/navigateBtn"
             tools:ignore="ContentDescription" />
 
@@ -90,29 +110,5 @@
                 android:text="@{viewModel.note.desc}"
                 tools:text="This is content!This is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is contentThis is content" />
         </ScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/deleteNoteFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/size_medium"
-            android:src="@drawable/ic_edit"
-            app:fabSize="mini"
-            android:onClick="@{() -> viewModel.deleteNote(viewModel.note)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/editNoteFab"
-            app:layout_constraintEnd_toEndOf="@id/editNoteFab"
-            app:layout_constraintStart_toStartOf="@id/editNoteFab" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/editNoteFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.navigateToEditor(viewModel.note)}"
-            android:layout_margin="@dimen/size_medium"
-            android:src="@drawable/ic_edit"
-            android:transitionName="fab"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

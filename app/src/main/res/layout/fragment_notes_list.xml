@@ -10,57 +10,85 @@
             type="com.glunode.notesapp.ui.noteslist.NotesListViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:fillViewport="true"
-        android:padding="@dimen/size_medium">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:paddingHorizontal="@dimen/size_medium">
 
-            <TextView
-                android:id="@+id/appTitle"
-                android:layout_width="wrap_content"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/size_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/appTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/app_name"
+                        android:textAppearance="@style/TitleTextAppearance" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/size_medium"
+                        android:background="@drawable/basic_view_bg"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{() -> viewModel.navigateToEditor()}"
+                        android:padding="@dimen/size_small"
+                        android:src="@drawable/ic_add"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/size_medium"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TitleTextAppearance"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@drawable/search_view"
+                app:iconifiedByDefault="false"
+                app:queryBackground="@null"
+                app:queryHint="Search notes" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/navigateToEditor"
-                android:layout_marginEnd="@dimen/size_medium"
-                android:background="@drawable/basic_view_bg"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="@dimen/size_small"
-                android:src="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="@id/appTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/appTitle"
-                tools:ignore="ContentDescription" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            isVisible="@{!viewModel.isEmpty}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/size_medium"
+            android:paddingBottom="@dimen/size_medium"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:spanCount="2"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_note" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:nestedScrollingEnabled="true"
-                android:orientation="vertical"
-                android:paddingBottom="92dp"
-                android:scrollbars="vertical"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constraintTop_toBottomOf="@id/appTitle"
-                app:spanCount="2"
-                tools:itemCount="1"
-                tools:listitem="@layout/item_note" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            isVisible="@{viewModel.isEmpty()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="@dimen/size_large"
+            android:text="@string/empty_state_message"
+            android:textColor="#A9A9B0"
+            android:textSize="16sp"
+            app:drawableTopCompat="@drawable/empty_state" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

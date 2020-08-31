@@ -8,9 +8,9 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.glunode.notesapp.model.Note
 
-@BindingAdapter("isGone")
-fun View.isGone(bool: Boolean) {
-    this.isVisible = !bool
+@BindingAdapter("isVisible")
+fun View.isVisible(bool: Boolean) {
+    this.isVisible = bool
 }
 
 @BindingAdapter("setFormattedDateText")

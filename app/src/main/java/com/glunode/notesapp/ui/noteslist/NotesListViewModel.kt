@@ -5,6 +5,7 @@ package com.glunode.notesapp.ui.noteslist
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.glunode.notesapp.data.NotesRepository
 import timber.log.Timber
@@ -13,6 +14,10 @@ class NotesListViewModel @ViewModelInject constructor(notesRepository: NotesRepo
     ViewModel() {
 
     val notesList = notesRepository.observerNotes()
+
+    val isEmpty = Transformations.map(notesList) {
+        it.isEmpty()
+    }
 
     private val _navigateToEditor = MutableLiveData<Boolean>()
     val navigateToEditor: LiveData<Boolean>
